@@ -11,7 +11,7 @@
     defaultEditor = true;
 
     themes.transparent_theme = {
-      inherits = "kanagawa";
+      inherits = "jetbrains_dark";
       "ui.background" = { };
     };
 
