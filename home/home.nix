@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./helix
+    ./programs/helix
   ];
 
   programs.home-manager.enable = true;

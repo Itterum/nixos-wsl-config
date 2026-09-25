@@ -15,36 +15,25 @@
       home-manager,
       ...
     }:
+    let
+      system = "x86_64-linux";
+      username = "itterum";
+    in
     {
       nixosConfigurations = {
-
         wsl = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+          inherit system;
+          specialArgs = { inherit username; };
           modules = [
             nixos-wsl.nixosModules.default
-            ./common.nix
-            ./wsl.nix
+            ./nixos/system/common.nix
+            ./hosts/wsl.nix
 
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.nixos = import ./home.nix;
-            }
-          ];
-        };
-
-        laptop = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./common.nix
-            ./laptop.nix
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.nixos = import ./home.nix;
+              home-manager.users.${username} = import ./home/home.nix;
             }
           ];
         };
