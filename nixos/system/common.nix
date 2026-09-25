@@ -15,6 +15,7 @@
     curl
     wget
     codex
+    gh
   ];
 
   programs.bash.enable = true;
