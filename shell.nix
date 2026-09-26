@@ -3,6 +3,7 @@
 }:
 pkgs.mkShell {
   buildInputs = with pkgs; [
+    nixd
     nil
     nixfmt-rfc-style
     statix

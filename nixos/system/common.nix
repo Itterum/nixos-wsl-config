@@ -7,7 +7,6 @@
   environment.sessionVariables = {
     TERM = "xterm-256color";
     COLORTERM = "truecolor";
-    GH_BROWSER = "explorer.exe";
   };
 
   environment.systemPackages = with pkgs; [
@@ -17,6 +16,7 @@
     wget
     codex
     gh
+    herdr
   ];
 
   programs.bash.enable = true;
