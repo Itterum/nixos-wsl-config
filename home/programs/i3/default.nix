@@ -23,7 +23,7 @@ in
     windowManager.i3 = {
       enable = true;
       config = {
-        modifier = modifier;
+        inherit modifier;
         fonts = {
           names = [ "DejaVu Sans Mono" ];
           size = 8.0;

@@ -33,10 +33,12 @@
 
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "backup";
-              home-manager.users.${username}.imports = [ ./home/home.nix ] ++ homeModules;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "backup";
+                users.${username}.imports = [ ./home/home.nix ] ++ homeModules;
+              };
             }
           ]
           ++ extraModules;

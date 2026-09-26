@@ -6,43 +6,47 @@
 }:
 
 {
-  boot.initrd.availableKernelModules = [
-    "ata_piix"
-    "mptspi"
-    "uhci_hcd"
-    "ehci_pci"
-    "ahci"
-    "sd_mod"
-    "sr_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
-  boot.extraModulePackages = [ ];
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/34bc3603-33fb-4436-a5e9-d3f02984235f";
-    fsType = "btrfs";
-  };
-
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/34bc3603-33fb-4436-a5e9-d3f02984235f";
-    fsType = "btrfs";
-    options = [ "subvol=home" ];
-  };
-
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/34bc3603-33fb-4436-a5e9-d3f02984235f";
-    fsType = "btrfs";
-    options = [ "subvol=nix" ];
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/C3C8-1262";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
+  boot = {
+    initrd.availableKernelModules = [
+      "ata_piix"
+      "mptspi"
+      "uhci_hcd"
+      "ehci_pci"
+      "ahci"
+      "sd_mod"
+      "sr_mod"
     ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ ];
+    extraModulePackages = [ ];
+  };
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/34bc3603-33fb-4436-a5e9-d3f02984235f";
+      fsType = "btrfs";
+    };
+
+    "/home" = {
+      device = "/dev/disk/by-uuid/34bc3603-33fb-4436-a5e9-d3f02984235f";
+      fsType = "btrfs";
+      options = [ "subvol=home" ];
+    };
+
+    "/nix" = {
+      device = "/dev/disk/by-uuid/34bc3603-33fb-4436-a5e9-d3f02984235f";
+      fsType = "btrfs";
+      options = [ "subvol=nix" ];
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-uuid/C3C8-1262";
+      fsType = "vfat";
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
+    };
   };
 
   swapDevices = [

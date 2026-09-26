@@ -5,8 +5,6 @@
     ./programs/helix
   ];
 
-  programs.home-manager.enable = true;
-
   home.packages = with pkgs; [
     kubectl
     k9s
@@ -20,40 +18,44 @@
     yq-go
   ];
 
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-    shellAliases = {
-      ls = "eza";
-      ll = "eza -lah";
-      la = "eza -a";
-      gs = "git status --short";
+  programs = {
+    home-manager.enable = true;
+
+    bash = {
+      enable = true;
+      enableCompletion = true;
+      shellAliases = {
+        ls = "eza";
+        ll = "eza -lah";
+        la = "eza -a";
+        gs = "git status --short";
+      };
+      initExtra = ''
+        export SDKMAN_DIR="$HOME/.sdkman"
+        [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+      '';
     };
-    initExtra = ''
-      export SDKMAN_DIR="$HOME/.sdkman"
-      [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
-    '';
-  };
 
-  programs.fzf = {
-    enable = true;
-    enableBashIntegration = true;
-  };
+    fzf = {
+      enable = true;
+      enableBashIntegration = true;
+    };
 
-  programs.zoxide = {
-    enable = true;
-    enableBashIntegration = true;
-  };
+    zoxide = {
+      enable = true;
+      enableBashIntegration = true;
+    };
 
-  programs.gh.enable = true;
-  programs.bat.enable = true;
+    gh.enable = true;
+    bat.enable = true;
 
-  programs.git = {
-    enable = true;
-    settings = {
-      user.name = "lyashenko.ivan";
-      user.email = "ivan.lyashenko.it@gmail.com";
-      init.defaultBranch = "main";
+    git = {
+      enable = true;
+      settings = {
+        user.name = "lyashenko.ivan";
+        user.email = "ivan.lyashenko.it@gmail.com";
+        init.defaultBranch = "main";
+      };
     };
   };
 
