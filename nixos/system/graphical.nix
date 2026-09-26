@@ -3,8 +3,29 @@
 {
   services.xserver.enable = true;
   services.xserver.windowManager.i3.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.defaultSession = "none+i3";
+  services.xserver.displayManager.startx = {
+    enable = true;
+    generateScript = true;
+  };
+
+  services.greetd = {
+    enable = true;
+    useTextGreeter = true;
+    settings.default_session = {
+      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.xinit}/bin/startx";
+      user = "greeter";
+    };
+  };
+
+  services.pulseaudio.enable = false;
+  services.pipewire = {
+    enable = true;
+    audio.enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+  };
+  security.rtkit.enable = true;
 
   xdg.portal = {
     enable = true;
