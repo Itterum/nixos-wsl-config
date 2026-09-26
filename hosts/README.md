@@ -32,7 +32,11 @@ nixos-rebuild build --flake .#laptop \
   --option extra-experimental-features 'nix-command flakes'
 ```
 
-If the build succeeds, activate it temporarily:
+If the build succeeds, save all graphical-session work and open a separate
+text console (for example, `Ctrl+Alt+F2`) or an SSH connection. Replacing
+LightDM with greetd may stop the current display-manager service and close the
+running X session. From the text console or SSH session, activate the new
+configuration temporarily:
 
 ```sh
 sudo nixos-rebuild test --flake .#laptop \
@@ -50,9 +54,10 @@ systemctl --user status pipewire pipewire-pulse wireplumber --no-pager
 getent passwd itterum
 ```
 
-The running i3 session is not replaced by `nixos-rebuild test`. The tuigreet
-screen appears after the next logout or reboot. Once the temporary generation
-is healthy, make it the default boot generation:
+Tuigreet may appear as soon as the display-manager transition completes. If
+the temporary activation fails, rebooting returns to the last persistent
+generation. Once the temporary generation is healthy, make it the default
+boot generation:
 
 ```sh
 sudo nixos-rebuild switch --flake .#laptop \
