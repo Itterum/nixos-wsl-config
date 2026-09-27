@@ -64,10 +64,4 @@
     ];
   };
   users.groups.${username} = { };
-
-  environment.systemPackages = with pkgs; [
-    brave
-    zed-editor
-    keepassxc
-  ];
 }

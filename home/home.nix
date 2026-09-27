@@ -6,16 +6,22 @@
   ];
 
   home.packages = with pkgs; [
+    zip
+    unzip
+    codex
+    herdr
     kubectl
     k9s
     teleport
     kubectx
-    fzf
     ripgrep
     fd
     eza
     jq
     yq-go
+    brave
+    zed-editor
+    keepassxc
   ];
 
   programs = {
