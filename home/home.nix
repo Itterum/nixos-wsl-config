@@ -19,9 +19,6 @@
     eza
     jq
     yq-go
-    brave
-    zed-editor
-    keepassxc
   ];
 
   programs = {
