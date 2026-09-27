@@ -3,12 +3,14 @@
 {
   environment.sessionVariables.GH_BROWSER = "explorer.exe";
 
-  wsl.enable = true;
-  wsl.defaultUser = username;
-  wsl.interop.register = true;
-  wsl.ssh-agent = {
+  wsl = {
     enable = true;
-    users = [ username ];
+    defaultUser = username;
+    interop.register = true;
+    ssh-agent = {
+      enable = true;
+      users = [ username ];
+    };
   };
 
   networking.hostName = "wsl";

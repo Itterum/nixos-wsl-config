@@ -21,7 +21,10 @@
       system = "x86_64-linux";
       username = "itterum";
       mkHost =
-        extraModules:
+        {
+          extraModules,
+          homeModules ? [ ],
+        }:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit username; };
@@ -30,10 +33,12 @@
 
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "backup";
-              home-manager.users.${username} = import ./home/home.nix;
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "backup";
+                users.${username}.imports = [ ./home/home.nix ] ++ homeModules;
+              };
             }
           ]
           ++ extraModules;
@@ -41,18 +46,26 @@
     in
     {
       nixosConfigurations = {
-        wsl = mkHost [
-          nixos-wsl.nixosModules.default
-          ./hosts/wsl.nix
-        ];
-        laptop = mkHost [
-          nix-flatpak.nixosModules.nix-flatpak
-          ./hosts/laptop.nix
-        ];
-        desktop = mkHost [
-          nix-flatpak.nixosModules.nix-flatpak
-          ./hosts/desktop.nix
-        ];
+        wsl = mkHost {
+          extraModules = [
+            nixos-wsl.nixosModules.default
+            ./hosts/wsl.nix
+          ];
+        };
+        laptop = mkHost {
+          extraModules = [
+            nix-flatpak.nixosModules.nix-flatpak
+            ./hosts/laptop.nix
+          ];
+          homeModules = [ ./home/graphical.nix ];
+        };
+        desktop = mkHost {
+          extraModules = [
+            nix-flatpak.nixosModules.nix-flatpak
+            ./hosts/desktop.nix
+          ];
+          homeModules = [ ./home/graphical.nix ];
+        };
       };
     };
 }
