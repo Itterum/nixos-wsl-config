@@ -1,10 +1,11 @@
 # Конфигурация NixOS
 
 Flake построен по схеме `flake-parts` и `import-tree` из
-[статьи Vimjoyer](https://www.vimjoyer.com/vid79-parts-wrapped). Есть два хоста:
-`wsl` и `pc`.
+[статьи Vimjoyer](https://www.vimjoyer.com/vid79-parts-wrapped). Есть три хоста:
+`wsl`, `nixos` и `pc`.
 
 - `modules/hosts/wsl` — NixOS-WSL.
+- `modules/hosts/nixos` — существующая виртуальная машина VMware.
 - `modules/hosts/pc` — NVIDIA, Niri и Noctalia.
 - `modules/features` — общие модули и обёртка Niri.
 - `nixos/system` и `home` — существующие системные и Home Manager настройки.
@@ -32,4 +33,10 @@ sudo nixos-rebuild switch --flake .#pc
 
 ```sh
 sudo nixos-rebuild switch --flake .#wsl
+```
+
+Для виртуальной машины VMware:
+
+```sh
+sudo nixos-rebuild switch --flake .#nixos
 ```
