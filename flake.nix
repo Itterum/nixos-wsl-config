@@ -7,65 +7,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:denful/import-tree";
+    wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia/v5.2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs =
-    {
-      nixpkgs,
-      nixos-wsl,
-      nix-flatpak,
-      home-manager,
-      ...
-    }:
-    let
-      system = "x86_64-linux";
-      username = "itterum";
-      mkHost =
-        {
-          extraModules,
-          homeModules ? [ ],
-        }:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit username; };
-          modules = [
-            ./nixos/system/common.nix
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                backupFileExtension = "backup";
-                users.${username}.imports = [ ./home/home.nix ] ++ homeModules;
-              };
-            }
-          ]
-          ++ extraModules;
-        };
-    in
-    {
-      nixosConfigurations = {
-        wsl = mkHost {
-          extraModules = [
-            nixos-wsl.nixosModules.default
-            ./hosts/wsl.nix
-          ];
-        };
-        laptop = mkHost {
-          extraModules = [
-            nix-flatpak.nixosModules.nix-flatpak
-            ./hosts/laptop.nix
-          ];
-          homeModules = [ ./home/graphical.nix ];
-        };
-        desktop = mkHost {
-          extraModules = [
-            nix-flatpak.nixosModules.nix-flatpak
-            ./hosts/desktop.nix
-          ];
-          homeModules = [ ./home/graphical.nix ];
-        };
-      };
-    };
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }

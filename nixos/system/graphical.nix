@@ -2,20 +2,11 @@
 
 {
   services = {
-    xserver = {
-      enable = true;
-      windowManager.i3.enable = true;
-      displayManager.startx = {
-        enable = true;
-        generateScript = true;
-      };
-    };
-
     greetd = {
       enable = true;
       useTextGreeter = true;
       settings.default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.xinit}/bin/startx";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd niri-session";
         user = "greeter";
       };
     };
@@ -49,7 +40,10 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-gnome
+    ];
     config.common.default = "*";
   };
 
