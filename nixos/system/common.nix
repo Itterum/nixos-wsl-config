@@ -20,6 +20,12 @@
     nix-ld.enable = true;
   };
 
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
